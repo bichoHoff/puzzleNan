@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Título</title>
+  <style>
+    /* CSS aquí */
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+
+  /* Fondo blanco (siempre estuvo ahí) */
+  #fondo-blanco {
+    position: fixed;
+    inset: 0;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+  }
+
+  .coords a {
+    display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 24px;
+  font-family: sans-serif;
+  color: black;
+  text-decoration: none;
+  font-weight: bold;
+  border-bottom: 2px solid black;
+  padding-bottom: 4px;
+}
+
+
+  /* Fondo negro (la capa que se rompe) */
+  #fondo-negro {
+    position: fixed;
+    inset: 0;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    transition: transform 1s ease;
+  }
+
+  /* El círculo */
+  #circulo {
+    width: 80px;
+    height: 80px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.2s ease;
+  }
+
+  </style>
+</head>
+<body>
+
+  <!-- HTML visible aquí -->
+<div class="coords">
+  <a href="https://maps.app.goo.gl/oxFYW6Mh5vFCxY1Y9" target="_blank">
+    Ir al lugar
+  </a>
+</div>
+
+
+<div id="fondo-negro">
+  <div id="circulo"></div>
+</div>
+
+  <script>
+    // JS aquí
+    
+  const circulo = document.getElementById('circulo');
+  const fondoNegro = document.getElementById('fondo-negro');
+
+  let taps = 0;
+  const limite = 3;
+  let escala = 1;
+
+  circulo.addEventListener('click', () => {
+    taps++;
+    escala += 0.15;
+    circulo.style.transform = `scale(${escala})`;
+
+    if (taps >= limite) {
+      // revienta
+      circulo.style.transform = 'scale(3)';
+      circulo.style.opacity = '0';
+
+      // rompe el fondo
+      setTimeout(() => {
+        fondoNegro.style.transform = 'translateY(100%)';
+      }, 300);
+    }
+  });
+
+  </script>
+
+</body>
+</html>
